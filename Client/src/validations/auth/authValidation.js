@@ -53,3 +53,5 @@ export const SignupValidation = Yup.object().shape({
     }),
   remember: Yup.boolean().oneOf([true], "You must agree to be remembered"),
 });
+
+export const aspp = () => {};
