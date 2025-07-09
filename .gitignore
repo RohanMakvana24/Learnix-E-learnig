@@ -1,0 +1,6 @@
+# Ignore node_modules everywhere
+node_modules/
+
+# If needed explicitly (optional redundancy)
+Client/node_modules/
+Backend/node_modules/

@@ -17,7 +17,7 @@ import upload from "../services/multer.js";
 import isAuthenticated from "../middleware/auth.js";
 const AuthRoutes = express.Router();
 
-// ~ Signup Route 🚦💨 ~ //
+// ~ Signup Route 🚦💨 ~ // ✅
 AuthRoutes.post(
   "/signup",
   upload.single("profile"),
@@ -43,13 +43,13 @@ AuthRoutes.post(
   SignupUser
 );
 
-// ~ Verification Route 🚦💨 ~ //
+// ~ Verification Route 🚦💨 ~ // ✅
 AuthRoutes.get("/verify/:verificationToken", VerifyUser);
 
-// ~ Verification Route 🚦💨 ~ //
+// ~ Verification Route 🚦💨 ~ // ✅
 AuthRoutes.get("/isverify/:u_id", isVerifiedUser);
 
-// ~ Delete User Routes 🚦💨 ~ //
+// ~ Delete User Routes 🚦💨 ~ // ✅
 AuthRoutes.delete("/deleteUser/:id", deleteUser);
 
 // ~ Login User Routes 🚦💨 ~ //
