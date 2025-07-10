@@ -11,6 +11,9 @@ import bcrypt from "bcryptjs";
 import { oauth2Client } from "./../config/googleConfig.js";
 import axios from "axios";
 import cloudinary from "cloudinary";
+import jwt from "jsonwebtoken";
+import BlackListedToken from "../models/BlackListedToken.js";
+
 // ⬟ Signup User Controller  ⬟ //
 export const SignupUser = async (req, res) => {
   try {
@@ -512,6 +515,7 @@ export const GoogleLogin = async (req, res) => {
   }
 };
 
+// ~ Private Auth Controller 🚦💨 ~ //
 export const PrivateAuth = async (req, res) => {
   const user = req.user;
   return res.status(200).json({
@@ -519,4 +523,33 @@ export const PrivateAuth = async (req, res) => {
     message: "Authentication Succefull",
     isValid: true,
   });
+};
+
+// ~ Logout Controller 🚦💨 ~ //
+export const Logout = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    if (!token) {
+      return res.status(404).json({
+        success: false,
+        message: "Token is required",
+      });
+    }
+
+    const decoded = jwt.decoded(token);
+    const expires = new Date(decoded.exp * 1000);
+    await BlackListModel({
+      token: token,
+      expiresAt: expires,
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Logout Successfull",
+    });
+  } catch (error) {
+    return res.status(504).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };

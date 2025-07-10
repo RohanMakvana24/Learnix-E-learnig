@@ -171,7 +171,7 @@ const HomePage = () => {
       <Helmet>
         <title>Learnix Home – Discover, Learn, and Succeed</title>
       </Helmet>
-      <div className="max-w-[1200px] mx-auto p-4">
+      <div className="w-full p-4">
         {/* Header */}
         <header className="mb-4">
           <h1 className="text-2xl font-semibold text-[#1e293b]">

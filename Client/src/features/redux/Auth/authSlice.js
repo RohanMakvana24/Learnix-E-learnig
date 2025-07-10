@@ -96,6 +96,28 @@ export const LoginFormAsyncThunk = createAsyncThunk(
   }
 );
 
+// # Logout AsyncThunk #
+export const LogoutAsyncThunk = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/logout`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data || "Something went wrong in logout API"
+      );
+    }
+  }
+);
+
 const isAuthenticated =
   decryptData(localStorage.getItem("isAuthenticated") || "false") || false;
 const authSlices = createSlice({
@@ -163,7 +185,7 @@ const authSlices = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(PrivateAuthAsyncThunk.fulfilled, (state, action) => {
+      .addCase(PrivateAuthAsyncThunk.fulfilled, (state) => {
         state.loading = false;
         state.isAuthenticated = true;
         localStorage.setItem("isAuthenticated", encryptData(true));
@@ -179,7 +201,37 @@ const authSlices = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(LoginFormAsyncThunk.full);
+      .addCase(LoginFormAsyncThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.token = action.payload.data.token;
+        state.user = action.payload.data.user;
+        localStorage.setItem("isAuthenticated", encryptData(true));
+        localStorage.setItem("authToken", state.token);
+        localStorage.setItem("user", JSON.stringify(state.user));
+      })
+      .addCase(LoginFormAsyncThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
+    // * Logout Builder *
+    builder
+      .addCase(LogoutAsyncThunk.pending, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(LogoutAsyncThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuthenticated = false;
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("user");
+        localStorage.removeItem("isAuthenticated");
+      })
+      .addCase(LogoutAsyncThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 

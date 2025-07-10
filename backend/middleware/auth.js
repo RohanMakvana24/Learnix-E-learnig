@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../models/UserModel.js";
+import BlackListedToken from "../models/BlackListedToken.js";
 const isAuthenticated = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
@@ -7,6 +8,14 @@ const isAuthenticated = async (req, res, next) => {
       return res.status(400).json({
         suceess: false,
         message: "Access denied. No token provided.",
+        isValid: false,
+      });
+    }
+    const blackListedToken = await BlackListedToken.findOne({ token });
+    if (blackListedToken) {
+      return res.status(400).json({
+        suceess: false,
+        message: "Token is blacklisted.",
         isValid: false,
       });
     }

@@ -6,6 +6,7 @@ import {
   GoogleLogin,
   isVerifiedUser,
   LoginUser,
+  Logout,
   OTP_Verification,
   PrivateAuth,
   ResendOtp,
@@ -118,4 +119,6 @@ AuthRoutes.get("/google-login", GoogleLogin);
 // ~ Private Routes  Routes 🚦💨 ~ //
 AuthRoutes.get("/private-auth", isAuthenticated, PrivateAuth);
 
+// ~ Logout Routes 🚦💨 ~ //
+AuthRoutes.get("/logout", isAuthenticated, Logout);
 export default AuthRoutes;

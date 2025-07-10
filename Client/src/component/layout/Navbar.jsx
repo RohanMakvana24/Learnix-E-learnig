@@ -13,13 +13,39 @@ import {
   FaBlog,
 } from "react-icons/fa";
 import { FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { LogoutAsyncThunk } from "../../features/redux/Auth/authSlice";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [ProfileDropdown, setProfileDropdown] = useState(false);
+  const dispatch = useDispatch();
   const ToggleProfileDropdown = () => {
     setProfileDropdown((prev) => !prev);
+  };
+
+  // ~` Handle Logout ~` //
+  const handleLogout = async () => {
+    const result = await dispatch(LogoutAsyncThunk());
+    const toastId = toast.loading("Logging out...");
+    if (LogoutAsyncThunk.fulfilled.match(result)) {
+      toast.update(toastId, {
+        render: result.payload.message,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      navigate("/auth/login");
+    } else {
+      toast.update(toastId, {
+        render: result.payload,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    }
   };
   const navLinks = [
     {
@@ -152,7 +178,7 @@ const Navbar = () => {
                   <div className="py-1">
                     <button
                       className="flex items-center w-full gap-2 px-4 py-2 text-left hover:bg-gray-100 text-sm text-red-600"
-                      onClick={() => alert("Logged out")}
+                      onClick={handleLogout}
                     >
                       <FaSignOutAlt /> Logout
                     </button>
