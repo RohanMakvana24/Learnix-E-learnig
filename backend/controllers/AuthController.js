@@ -206,13 +206,12 @@ export const ForgotPassword = async (req, res) => {
         const {email} = req.body;
 
         const user = await UserModel.findOne({email: email});
+        if (! user) {
+            return res.status(404).json({success: false, message: "User Not Exists"});
+        }
         if (user.isGoogleLogin == true) {
             return res.status(400).json({success: false, message: "Already Login using the google login option..."});
         }
-        if (! user) {
-            return res.status(404).json({success: false, message: "Email is incorrect"});
-        }
-
         function generateOTP() {
             return Math.floor(100000 + Math.random() * 900000).toString();
         }

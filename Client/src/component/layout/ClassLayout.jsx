@@ -7,7 +7,7 @@ const ClasstLayout = () => {
   return (
     <div className="h-screen w-full overflow-auto bg-white">
       <Navbar />
-      <main className="pt-19 w-screen">
+      <main className="pt-14 w-full">
         <Outlet />
       </main>
       <Footer />
