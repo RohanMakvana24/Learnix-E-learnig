@@ -174,7 +174,7 @@ const HomePage = () => {
       <div className="w-full">
         <section className="relative bg-gradient-to-r py-16  from-[#2f2a7c] via-[#3f33d1] to-[#2f2a7c] px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 pt-0 flex flex-col md:flex-row items-center justify-between overflow-visible">
           {/* Left Content */}
-          <div className="max-w-xl w-full text-white relative z-10 mt-10">
+          <div className="max-w-xl w-full text-white relative z-10 mt-10 sm:-ml-14">
             <span className="inline-block bg-[#2f2a7c] text-xs font-semibold rounded-full px-3 py-1 mb-4">
               The Leader in Online Learning
             </span>

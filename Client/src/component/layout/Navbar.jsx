@@ -85,11 +85,19 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 z-50  bg-gradient-to-r from-[#2f2a7c] via-[#3f33d1] to-[#2f2a7c]">
         {/* Main Navbar */}
         <div className="flex justify-between items-center px-4 py-2 h-14 max-w-[1440px] mx-auto">
+          {/* Center: Logo */}
+          <div className="flex justify-center items-center">
+            <img
+              src="/assets/img/logo/learnix.png"
+              alt="Logo"
+              className="h-11 w-32 sm:h-12 sm:w-36  "
+            />
+          </div>
           {/* Left: Toggle Button */}
           <div className="sm:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="text-gray-800 focus:outline-none"
+              className=" text-white focus:outline-none"
             >
               <svg
                 className="h-6 w-6"
@@ -116,83 +124,11 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Center: Logo */}
-          <div className="flex justify-center items-center">
-            <img
-              src="/assets/img/logo/learnix.png"
-              alt="Logo"
-              className="h-8 w-32 ml-4"
-            />
-          </div>
-
-          {/* Right: Icons */}
-          <div className="flex justify-end items-center space-x-3 sm:hidden">
-            {/* Sun Icon */}
-            <FaSun className="text-[16px] cursor-pointer" />{" "}
-            {/* Cart Icon with Badge */}
-            <div className="relative">
-              <FaShoppingCart className="text-[16px] cursor-pointer" />
-              <div className="absolute -top-1.5 -right-1.5 bg-green-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                1
-              </div>
-            </div>
-            {/* Profile Image Button */}
-            <div className="relative mt-2">
-              <button
-                onClick={ToggleProfileDropdown}
-                className="focus:outline-none"
-              >
-                <img
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
-                  alt="Profile"
-                  className="w-9 h-9 rounded-full object-cover cursor-pointer border border-gray-300"
-                />
-              </button>
-              {/* Profile Dropdown */}
-              {ProfileDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                  <div className="py-2 px-4 border-b text-sm text-gray-700">
-                    Hi, John
-                  </div>
-                  <ul className="py-1 text-sm text-gray-700">
-                    <li>
-                      <a
-                        href="/profile"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                      >
-                        <FaUser />
-                        My Profile
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/settings"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                      >
-                        <FaCog />
-                        Settings
-                      </a>
-                    </li>
-                  </ul>
-                  <div className="py-1">
-                    <button
-                      className="flex items-center w-full gap-2 px-4 py-2 text-left hover:bg-gray-100 text-sm text-red-600"
-                      onClick={() => handleLogout()}
-                    >
-                      <FaSignOutAlt />
-                      Logout
-                    </button>
-                  </div>
-                </div>
-              )}{" "}
-            </div>
-          </div>
-
           {/* Desktop Menu */}
           <ul className="hidden sm:flex items-center space-x-6 text-[14px] font-medium text-black relative">
             {navLinks.map(({ label, icon, children }) => (
               <li key={label} className="relative group cursor-pointer">
-                <div className="flex items-center space-x-1 hover:text-[#FF4D6D]">
+                <div className="flex items-center text-white space-x-1 hover:text-[#FF4D6D]">
                   {icon}
                   <span>{label}</span>
                   <FaChevronDown className="text-xs mt-[1px]" />
@@ -216,10 +152,10 @@ const Navbar = () => {
           {/* Desktop Right Icons */}
           <div className="hidden sm:flex items-center space-x-4">
             {/* Sun Icon */}
-            <FaSun className="text-[16px] cursor-pointer" />{" "}
+            <FaSun className="text-[16px] text-white  cursor-pointer" />{" "}
             {/* Cart Icon with Badge */}
             <div className="relative">
-              <FaShoppingCart className="text-[16px] cursor-pointer" />
+              <FaShoppingCart className="text-[16px] text-white cursor-pointer" />
               <div className="absolute -top-1.5 -right-1.5 bg-green-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                 1
               </div>
@@ -284,7 +220,7 @@ const Navbar = () => {
           }`}
         >
           {/* Header with logo and close icon */}
-          <div className="flex items-center justify-between px-4 py-3 border-b">
+          <div className="flex items-center justify-between px-4 py-3 ">
             <img
               src="/assets/img/logo/learnix.png"
               alt="Logo"
