@@ -83,14 +83,7 @@ const App = () => {
         </Route>
         {/* Class Routes */}
         <Route path="/class" element={<ClasstLayout />}>
-          <Route
-            index
-            element={
-              <IsAuthenticated>
-                <HomePage />
-              </IsAuthenticated>
-            }
-          ></Route>
+          <Route index element={<HomePage />}></Route>
           <Route
             path="one-class"
             element={
