@@ -9,14 +9,14 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="max-w-7xl bg-[#f9f9f9] border-t border-gray-200 mx-auto px-6 py-10">
+    <footer className="w-full bg-[#000000] border-t border-gray-200 mx-auto px-6 py-10">
       <div className="flex flex-wrap justify-between">
         {/* Branding & Contact */}
         <div className="w-full sm:w-auto max-w-xs mb-8 sm:mb-0">
           <div className="flex items-center mb-3">
             <img
               alt="Learnix logo"
-              className="w-30 h-8 -ml-2"
+              className="w-30 h-11 -ml-2"
               src="/assets/img/logo/learnix.png"
             />
           </div>
@@ -24,15 +24,15 @@ const Footer = () => {
             Empower your learning journey with top-tier online courses and
             expert instructors.
           </p>
-          <div className="flex items-center mt-6 text-gray-600 text-sm font-semibold">
-            <FaPhoneAlt className="mr-2 text-gray-600" />
+          <div className="flex items-center mt-6 text-white text-sm font-semibold">
+            <FaPhoneAlt className="mr-2 text-white" />
             +91 98765 43210
           </div>
         </div>
 
         {/* Resources */}
         <div className="w-1/2 sm:w-auto mb-8 sm:mb-0">
-          <h3 className="text-gray-900 font-semibold mb-4">Resources</h3>
+          <h3 className="text-white font-semibold mb-4">Resources</h3>
           <ul className="space-y-2 text-sm text-gray-400">
             <li>Course Catalog</li>
             <li>Student Guide</li>
@@ -43,7 +43,7 @@ const Footer = () => {
 
         {/* Company */}
         <div className="w-1/2 sm:w-auto mb-8 sm:mb-0">
-          <h3 className="text-gray-900 font-semibold mb-4">Company</h3>
+          <h3 className="text-white font-semibold mb-4">Company</h3>
           <ul className="space-y-2 text-sm text-gray-400">
             <li>About Learnix</li>
             <li>Careers</li>
@@ -54,7 +54,7 @@ const Footer = () => {
 
         {/* Quick Links */}
         <div className="w-1/2 sm:w-auto mb-8 sm:mb-0">
-          <h3 className="text-gray-900 font-semibold mb-4">Quick Links</h3>
+          <h3 className="text-white font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm text-gray-400">
             <li>My Dashboard</li>
             <li>Become an Instructor</li>
@@ -65,7 +65,7 @@ const Footer = () => {
 
         {/* Social Media */}
         <div className="w-full sm:w-auto max-w-xs">
-          <h3 className="text-gray-900 font-semibold mb-4">Follow Us</h3>
+          <h3 className="text-white font-semibold mb-4">Follow Us</h3>
           <div className="flex space-x-3 mb-4">
             <a
               aria-label="Facebook"

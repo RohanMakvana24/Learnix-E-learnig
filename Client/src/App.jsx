@@ -14,20 +14,11 @@ import EmailVerification from "./pages/auth/EmailVerification";
 import Page404 from "./pages/error/Page404";
 import IsCheckSignup from "./protected/auth/CheckSignup";
 import { IsAuthenticated, IsLogin } from "./protected/auth/IsAuthenticated";
+import CoursePage from "./pages/course/CoursePage";
 const App = () => {
   return (
     <>
       <Routes>
-        {" "}
-        {/* Landing Page Route */}
-        <Route
-          path="/"
-          element={
-            <IsLogin>
-              <LandingPage />
-            </IsLogin>
-          }
-        ></Route>
         {/* Auth Routes  */}
         <Route path="/auth" element={<AuthLayout />}>
           <Route
@@ -82,8 +73,9 @@ const App = () => {
           ></Route>
         </Route>
         {/* Class Routes */}
-        <Route path="/class" element={<ClasstLayout />}>
+        <Route path="/" element={<ClasstLayout />}>
           <Route index element={<HomePage />}></Route>
+          <Route path="course" element={<CoursePage />}></Route>
           <Route
             path="one-class"
             element={

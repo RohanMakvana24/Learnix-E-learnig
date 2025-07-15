@@ -11,15 +11,20 @@ import {
   FaTachometerAlt,
   FaFileAlt,
   FaBlog,
+  FaUser,
+  FaCog,
+  FaSignOutAlt,
   FaLeaf,
+  FaEthereum,
 } from "react-icons/fa";
-import { FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { FaUserGraduate } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { LogoutAsyncThunk } from "../../features/redux/Auth/authSlice";
 import { toast } from "react-toastify";
-import { FaLock, FaClone, FaCube, FaVectorSquare } from "react-icons/fa";
+import { NavLink, Link, useSearchParams, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [ProfileDropdown, setProfileDropdown] = useState(false);
@@ -28,7 +33,10 @@ const Navbar = () => {
     setProfileDropdown((prev) => !prev);
   };
 
-  // ~` Handle Logout ~` //
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isLogin, setisLogin] = useState(isAuthenticated);
+
+  // ~` Handle Logout `~ //
   const handleLogout = async () => {
     const result = await dispatch(LogoutAsyncThunk());
     const toastId = toast.loading("Logging out...");
@@ -53,7 +61,6 @@ const Navbar = () => {
     {
       label: "Home",
       icon: <FaHome />,
-      children: ["Overview", "Landing", "Intro"],
     },
     {
       label: "Courses",
@@ -81,8 +88,6 @@ const Navbar = () => {
   const handleDropdownToggle = (label) => {
     setOpenDropdown((prev) => (prev === label ? null : label));
   };
-
-  const [isLogin, setisLogin] = useState(false);
 
   return (
     <>
@@ -131,26 +136,37 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <ul className="hidden mt-2 sm:flex items-center space-x-6 text-[14px] font-medium text-black relative">
             {navLinks.map(({ label, icon, children }) => (
-              <li key={label} className="relative group cursor-pointer">
-                <div className="flex items-center text-base font-semibold text-white space-x-1 hover:text-[#FF4D6D]">
+              <li key={label} className="relative cursor-pointer">
+                {/* Menu Trigger with `peer` */}
+                <div className="peer flex items-center text-base font-semibold text-white space-x-1 hover:text-[#FF4D6D]">
                   {icon}
                   <span>{label}</span>
-                  <FaChevronDown className="text-xs mt-[1px]" />
+                  {children ? (
+                    <FaChevronDown className="text-xs mt-[1px]" />
+                  ) : (
+                    ""
+                  )}
                 </div>
+
+                {/* Submenu */}
                 {children && (
-                  <ul className="absolute left-0 mt-2 w-44 bg-white shadow-md rounded-md p-2 hidden group-hover:block z-50">
+                  <ul
+                    className="absolute left-0 mt-2 w-44 bg-white shadow-md rounded-md p-2 
+          opacity-0 invisible peer-hover:opacity-100 peer-hover:visible 
+          hover:opacity-100 hover:visible transition-all duration-200 z-50"
+                  >
                     {children.map((child, idx) => (
                       <li
                         key={idx}
                         className="py-1 px-2 hover:bg-gray-100 text-sm text-gray-700 hover:text-[#FF4D6D] rounded"
                       >
-                        {child}{" "}
+                        {child}
                       </li>
-                    ))}{" "}
+                    ))}
                   </ul>
-                )}{" "}
+                )}
               </li>
-            ))}{" "}
+            ))}
           </ul>
 
           {/* Desktop Right Icons */}
@@ -158,7 +174,11 @@ const Navbar = () => {
             <>
               <div className="hidden mt-2.5 sm:flex items-center space-x-4">
                 {/* Sun Icon */}
-                <FaSun className="text-[16px] text-white  cursor-pointer" />{" "}
+                <button className="group flex items-center px-4 py-2 text-sm font-semibold text-white rounded-full hover:bg-gray-100 hover:text-black transition">
+                  <FaUserGraduate className="mr-2 text-white transition group-hover:text-black" />
+                  Become Instructor
+                </button>
+                <FaSun className="text-[16px] text-white cursor-pointer " />
                 {/* Cart Icon with Badge */}
                 <div className="relative">
                   <FaShoppingCart className="text-[16px] text-white cursor-pointer" />
@@ -166,8 +186,10 @@ const Navbar = () => {
                     1
                   </div>
                 </div>
-                {/* Profile Image Button */}
+                {/* Become Instructor Button - on left side of profile */}
+                {/* Profile Section */}
                 <div className="relative mt-2">
+                  {/* Profile Image Button */}
                   <button
                     onClick={ToggleProfileDropdown}
                     className="focus:outline-none"
@@ -178,9 +200,10 @@ const Navbar = () => {
                       className="w-9 h-9 rounded-full object-cover cursor-pointer border border-gray-300"
                     />
                   </button>
+
                   {/* Profile Dropdown */}
                   {ProfileDropdown && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                    <div className="absolute right-0 top-12 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                       <div className="py-2 px-4 border-b text-sm text-gray-700">
                         Hi, John
                       </div>
@@ -207,14 +230,14 @@ const Navbar = () => {
                       <div className="py-1">
                         <button
                           className="flex items-center w-full gap-2 px-4 py-2 text-left hover:bg-gray-100 text-sm text-red-600"
-                          onClick={() => handleLogout()}
+                          onClick={handleLogout}
                         >
                           <FaSignOutAlt />
                           Logout
                         </button>
                       </div>
                     </div>
-                  )}{" "}
+                  )}
                 </div>
               </div>
             </>
@@ -230,8 +253,8 @@ const Navbar = () => {
                     1
                   </div>
                 </div>
-                <button
-                  type="button"
+                <Link
+                  to="/auth/login"
                   class="px-3  py-2 text-xs font-semibold text-center inline-flex items-center text-gray-900 rounded-lg bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
                 >
                   <svg
@@ -250,9 +273,9 @@ const Navbar = () => {
                     />
                   </svg>
                   Login
-                </button>
-                <button
-                  type="button"
+                </Link>
+                <Link
+                  to="/auth/signup"
                   class="px-3  py-2 -ml-2 text-xs font-semibold text-center inline-flex items-center text-white rounded-lg bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
                 >
                   <svg
@@ -271,7 +294,7 @@ const Navbar = () => {
                     />
                   </svg>
                   Ragister
-                </button>
+                </Link>
               </div>
             </>
           )}
@@ -279,18 +302,21 @@ const Navbar = () => {
 
         {/* Mobile Sidebar Slide-in Menu */}
         <div
-          className={`fixed top-0 left-0 w-72 h-full bg-white shadow-lg z-40 transform transition-transform duration-300 sm:hidden ${
+          className={`fixed top-0 left-0 w-72 h-full bg-black shadow-xl z-40 transform transition-transform duration-300 sm:hidden ${
             isMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          {/* Header with logo and close icon */}
-          <div className="flex items-center justify-between px-4 py-3 ">
+          {/* Header with logo and close button */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
             <img
               src="/assets/img/logo/learnix.png"
               alt="Logo"
               className="h-8 w-auto"
             />
-            <button onClick={toggleMenu} className="text-gray-700">
+            <button
+              onClick={toggleMenu}
+              className="text-white hover:text-red-400 transition"
+            >
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -307,45 +333,109 @@ const Navbar = () => {
             </button>
           </div>
 
+          {/* Profile Section */}
+          <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700">
+            <div className="flex items-center space-x-3">
+              <img
+                src="/assets/img/users/user1.png" // Replace with actual image
+                alt="Profile"
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-pink-500"
+              />
+              <div>
+                <h4 className="text-white font-semibold text-sm">Sophia Mia</h4>
+                <p className="text-gray-400 text-xs">ID: 150001</p>
+              </div>
+            </div>
+            <button
+              title="Logout"
+              className="text-gray-400 hover:text-red-500 transition"
+              onClick={handleLogout} // implement this function
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </button>
+          </div>
+
           {/* Menu content */}
           <div className="p-4 space-y-4 overflow-y-auto h-full pb-20">
-            <ul className="flex flex-col space-y-3 text-[14px] font-medium text-black">
-              {navLinks.map(({ label, icon, children }) => (
-                <li key={label}>
-                  <div
-                    onClick={() => handleDropdownToggle(label)}
-                    className="flex justify-between items-center cursor-pointer hover:bg-gray-100 px-2 py-2 rounded"
-                  >
-                    <div className="flex items-center space-x-2">
-                      {icon}
-                      <span
-                        className={
-                          label === "Home" ? "text-[#FF4D6D] font-semibold" : ""
-                        }
-                      >
-                        {label}{" "}
-                      </span>
-                    </div>
-                    <FaChevronDown
-                      className={`transition-transform duration-200 ${
-                        openDropdown === label ? "rotate-180" : ""
-                      } text-gray-500`}
-                    />
-                  </div>
-                  {openDropdown === label && children && (
-                    <ul className="pl-8 mt-2 space-y-1 text-sm text-gray-600">
-                      {children.map((child, idx) => (
-                        <li
-                          key={idx}
-                          className="py-1 hover:text-[#FF4D6D] transition-colors"
+            <ul className="flex flex-col space-y-2 text-sm font-medium">
+              {navLinks.map(({ label, icon, children }) => {
+                const isActive = label === "Home"; // replace with route logic if needed
+
+                return (
+                  <li key={label}>
+                    <div
+                      onClick={() => handleDropdownToggle(label)}
+                      className={`
+            w-full flex items-center justify-between px-4 py-3 rounded-lg cursor-pointer
+            transition-all duration-300
+            ${
+              isActive
+                ? "bg-gradient-to-r from-pink-600 to-orange-500 text-white shadow-lg border-l-4 border-white"
+                : "hover:bg-gray-800 text-gray-300"
+            }
+          `}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <span
+                          className={`text-lg ${
+                            isActive
+                              ? "text-white"
+                              : "text-gray-400 group-hover:text-white"
+                          }`}
                         >
-                          {child}{" "}
-                        </li>
-                      ))}{" "}
-                    </ul>
-                  )}{" "}
-                </li>
-              ))}{" "}
+                          {icon}
+                        </span>
+                        <span
+                          className={`font-semibold ${
+                            isActive ? "text-white" : "text-gray-200"
+                          }`}
+                        >
+                          {label}
+                        </span>
+                      </div>
+
+                      {/* Dropdown icon */}
+                      {children && (
+                        <FaChevronDown
+                          className={`text-sm transition-transform duration-200 ${
+                            openDropdown === label ? "rotate-180" : ""
+                          } ${
+                            isActive
+                              ? "text-white"
+                              : "text-gray-400 group-hover:text-white"
+                          }`}
+                        />
+                      )}
+                    </div>
+
+                    {/* Dropdown children */}
+                    {openDropdown === label && children && (
+                      <ul className="pl-12 mt-1 space-y-1 text-sm text-gray-300">
+                        {children.map((child, idx) => (
+                          <li
+                            key={idx}
+                            className="py-1 hover:text-pink-400 transition-colors"
+                          >
+                            {child}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

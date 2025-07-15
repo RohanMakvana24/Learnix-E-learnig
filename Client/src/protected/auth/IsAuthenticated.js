@@ -14,7 +14,6 @@ export const IsAuthenticated = ({children}) => {
 
     return isAuth ? children : null;
 };
-
 export const IsLogin = ({children}) => {
     const navigate = useNavigate();
     const [isLoged, setisLoged] = useState(false);
@@ -22,7 +21,7 @@ export const IsLogin = ({children}) => {
     console.log(isAuthenticated);
     useEffect(() => {
         if (isAuthenticated) {
-            return navigate("/class");
+            return navigate("/");
         }
         setisLoged(true);
     }, [isAuthenticated]);

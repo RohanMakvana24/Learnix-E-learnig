@@ -6,6 +6,7 @@ import AddJoinClass from "../../component/modals/home/AddJoinClass";
 import { Helmet } from "react-helmet";
 import TopCategory from "../../component/home/TopCategory";
 import FeaturedCourses from "../../component/home/FeaturedCourse";
+import TrendingInstructors from "../../component/home/TrendingInstructors";
 
 const HomePage = () => {
   const cards = [
@@ -343,6 +344,8 @@ const HomePage = () => {
         <TopCategory />
         {/* Featured Course */}
         <FeaturedCourses />
+        {/* Trending Instructor */}
+        <TrendingInstructors />
       </div>
     </>
   );

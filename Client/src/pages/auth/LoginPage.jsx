@@ -38,7 +38,7 @@ const LoginPage = () => {
           autoClose: 3000,
           closeOnClick: true,
         });
-        navigate("/class");
+        navigate("/");
       } else {
         setIsLoading(false);
         toast.update(toastId, {
