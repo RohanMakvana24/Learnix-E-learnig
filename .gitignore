@@ -4,3 +4,4 @@ node_modules/
 # If needed explicitly (optional redundancy)
 Client/node_modules/
 Backend/node_modules/
+Admin/node_modules/
